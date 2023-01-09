@@ -1,2 +1,10 @@
+servlets\LogFilter.class
+servlets\DatabaseAccess.class
+servlets\SessionTrack.class
+servlets\CookieServlet.class
+servlets\CheckBox.class
+servlets\ErrorHandler.class
+servlets\ReadCookies.class
 servlets\ResponseServlet.class
+servlets\Refresh.class
 servlets\GreetingServlet.class
