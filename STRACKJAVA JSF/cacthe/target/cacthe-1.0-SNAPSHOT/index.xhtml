@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+  <title>Demo JSF</title>
+</h:head>
+<h:body>
+  <h:link rel="stackjava.com">Demo JSF: Basic Tags</h:link> <br/>
+  <h:form>
+  Name: <h:inputText value="#{helloBean.name}" /> <br/>
+  Password: <h:inputSecret value="#{helloBean.password}" /> <br/>
+  Gender: <h:selectOneRadio value = "#{helloBean.gender}">
+               <f:selectItem itemValue = "male" itemLabel = "male" />
+              <f:selectItem itemValue = "female" itemLabel = "female" />
+           </h:selectOneRadio>     <br/>    
+  Favorites:   <h:selectManyCheckbox value = "#{helloBean.favorites}"> 
+           <f:selectItem itemValue = "Design" itemLabel = "Design" /> 
+           <f:selectItem itemValue = "Coding" itemLabel = "Coding" /> 
+           <f:selectItem itemValue = "Music" itemLabel = "Music" /> 
+           <f:selectItem itemValue = "Food" itemLabel = "Food" /> 
+           <f:selectItem itemValue = "Sport" itemLabel = "Sport" /> 
+        </h:selectManyCheckbox><br/>
+  Skills: <h:selectManyListbox value = "#{helloBean.skills}"> 
+           <f:selectItem itemValue = "Java" itemLabel = "Java" /> 
+           <f:selectItem itemValue = "SQL" itemLabel = "SQL" /> 
+           <f:selectItem itemValue = "AWS" itemLabel = "AWS" /> 
+           <f:selectItem itemValue = "C#" itemLabel = "C#" /> 
+           <f:selectItem itemValue = "Python" itemLabel = "Python" /> 
+      </h:selectManyListbox><br/>
+  Title: <h:selectOneMenu value = "#{helloBean.title}"> 
+           <f:selectItem itemValue = "Dev" itemLabel = "Dev" /> 
+           <f:selectItem itemValue = "QA" itemLabel = "QA" /> 
+           <f:selectItem itemValue = "Tester" itemLabel = "Tester" /> 
+           <f:selectItem itemValue = "BA" itemLabel = "BA" /> 
+      </h:selectOneMenu><br/>
+  
+  
+  
+  <h:commandButton action="#{helloBean.submit()}" value="Submit" />
+  </h:form>
+</h:body>
+</html>

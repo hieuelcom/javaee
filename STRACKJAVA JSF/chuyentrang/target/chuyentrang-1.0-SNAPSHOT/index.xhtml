@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Demo JSF</title>
+</h:head>
+<h:body>
+	<h:link rel="stackjava.com">Demo JSF</h:link>
+	<br />
+	<h:form>
+		<h:commandButton action="page2"
+			value="Move to page2.xhtml by JSF outcome" />
+	</h:form>
+	<br />
+	<h:form>
+		<h:commandButton action="#{navigationBean.moveToPage2()}"
+			value="Move to page2.xhtml by managed bean" />
+	</h:form>
+
+	<br />
+	<h:form>
+		<h:commandButton action="page2?faces-redirect=true"
+			value="Move to page2.xhtml by JSF outcome (redirect = true)" />
+	</h:form>
+</h:body>
+</html>
