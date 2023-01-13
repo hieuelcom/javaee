@@ -3,12 +3,12 @@
     <servlet>
         <display-name>GreetingServlet</display-name>
         <servlet-name>GreetingServlet</servlet-name>
-        <servlet-class>servlets.GreetingServlet</servlet-class>
+        <servlet-class>servlet.GreetingServlet</servlet-class>
     </servlet>
     <servlet>
         <display-name>ResponseServlet</display-name>
         <servlet-name>ResponseServlet</servlet-name>
-        <servlet-class>servlets.ResponseServlet</servlet-class>
+        <servlet-class>servlet.ResponseServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GreetingServlet</servlet-name>
@@ -73,20 +73,19 @@
             <param-name>test-param</param-name>
             <param-value>Initialization Paramter</param-value>
         </init-param>
-    </filter>
+    
     <filter-mapping>
         <filter-name>LogFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <filter>
+    
         <filter-name>LogFilter</filter-name>
         <filter-class>LogFilter</filter-class>
         <init-param>
             <param-name>test-param</param-name>
             <param-value>Initialization Paramter</param-value>
         </init-param>
-    </filter>
-    <filter>
+    
         <filter-name>AuthenFilter</filter-name>
         <filter-class>AuthenFilter</filter-class>
         <init-param>

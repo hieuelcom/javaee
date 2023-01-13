@@ -1,5 +1,4 @@
 servlets\LogFilter.class
-servlets\DatabaseAccess.class
 servlets\SessionTrack.class
 servlets\CookieServlet.class
 servlets\CheckBox.class
