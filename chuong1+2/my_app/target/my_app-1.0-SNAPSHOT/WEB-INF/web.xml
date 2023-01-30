@@ -111,7 +111,7 @@
     </filter-mapping>
     <servlet>
         <servlet-name>DatabaseAccess</servlet-name>
-        <servlet-class>servlets.DatabaseAccess</servlet-class>
+        <servlet-class>servlet.DatabaseAccess</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DatabaseAccess</servlet-name>
