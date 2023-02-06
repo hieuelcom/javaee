@@ -31,7 +31,7 @@ CREATE TABLE `student` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `studentid` varchar(255) DEFAULT NULL,
-  `addres` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `age` int(2) DEFAULT NULL,
   `birth` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -40,7 +40,7 @@ CREATE TABLE `student` (
 -- Đang đổ dữ liệu cho bảng `student`
 --
 
-INSERT INTO `student` (`id`, `name`, `studentid`, `addres`, `age`, `birth`) VALUES
+INSERT INTO `student` (`id`, `name`, `studentid`, `address`, `age`, `birth`) VALUES
 (1, 'Nguyen Trung Hieu', 'TH2312003', 'nha 6 ngo 475/20/93 nguyen trai thanh xuan ha noi', 20, '2003-01-22'),
 (2, 'Pham The Bach ', 'TB0472003', 'nha 214 nguyen trai thanh xuan ha noi', 19, '2003-07-04');
 

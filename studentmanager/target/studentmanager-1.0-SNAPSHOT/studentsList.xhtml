@@ -19,7 +19,10 @@
 </h:head>
 
     <h:body>
-        <center><h2><h:outputText value="Student Records"/></h2></center>
+        <center>
+            <h1>Student Manager</h1>
+            <h2><h:outputText value="Student Records"/>#{studentBean.records}</h2>
+        </center>
     <h:form id="studentForm">
         <h:dataTable id="studentTable" binding="#{table}" value="#{studentBean.studentsList()}" var="student" class="table table-striped table-hover table-bordered tableUpdated">
             <h:column>

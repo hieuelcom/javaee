@@ -13,15 +13,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
  
 import DAO.DatabaseOperation;
+import javax.faces.bean.ViewScoped;
  
-@ManagedBean @RequestScoped
+@ManagedBean @ViewScoped
 public class StudentBean {
-    private int id;
-    private String name;
-    private String studentid;
-    private String address;
-    private int age;
+    private int id=0;
+    private String name="";
+    private String studentid="";
+    private String address="";
+    private int age=0;
     private Date birth;
+    private int records;
     
     public ArrayList studentsListFromDB;
 
@@ -63,11 +65,30 @@ public class StudentBean {
     public void setId(int id){
         this.id=id;
     }
+
+    public String getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(String studentid) {
+        this.studentid = studentid;
+    }
+
+    public int getRecords() {
+        return records;
+    }
+
+    public void setRecords(int records) {
+        this.records = records;
+    }
     @PostConstruct
     public void init() {
         studentsListFromDB = DatabaseOperation.getStudentsListFromDB();
-    }
- 
+        if(studentsListFromDB != null) {
+            this.records = studentsListFromDB.size();
+        }
+    }    
+    
     public ArrayList studentsList() {
         return studentsListFromDB;
     }
@@ -76,8 +97,8 @@ public class StudentBean {
         return DatabaseOperation.saveStudentDetailsInDB(newStudentObj);
     }
      
-    public String editStudentRecord(int studentId) {
-        return DatabaseOperation.editStudentRecordInDB(studentId);
+    public String editStudentRecord(int studentsId) {
+        return DatabaseOperation.editStudentRecordInDB(studentsId);
     }
      
     public String updateStudentDetails(StudentBean updateStudentObj) {
