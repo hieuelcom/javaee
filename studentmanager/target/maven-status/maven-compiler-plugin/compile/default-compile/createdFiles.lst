@@ -1,2 +1,5 @@
 student\StudentBean.class
-DAO\DatabaseOperation.class
+DAO\Dao.class
+DAO\studentDao.class
+DBPool\Connector.class
+controller\StudentController.class

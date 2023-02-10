@@ -1,2 +1,5 @@
-D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\DAO\DatabaseOperation.java
+D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\DBPool\Connector.java
+D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\DAO\Dao.java
+D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\DAO\studentDao.java
 D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\student\StudentBean.java
+D:\NetbeansWorkspace\javaee\studentmanager\src\main\java\controller\StudentController.java

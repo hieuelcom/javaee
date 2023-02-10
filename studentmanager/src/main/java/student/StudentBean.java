@@ -12,21 +12,30 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
  
-import DAO.DatabaseOperation;
 import javax.faces.bean.ViewScoped;
  
+import DAO.studentDao;
+import DBPool.Connector;
 @ManagedBean @ViewScoped
 public class StudentBean {
-    private int id=0;
-    private String name="";
-    private String studentid="";
-    private String address="";
-    private int age=0;
+    private int id;
+    private String name;
+    private String studentid;
+    private String address;
+    private int age;
     private Date birth;
     private int records;
     
     public ArrayList studentsListFromDB;
 
+    public StudentBean() {
+        
+    }
+
+    public StudentBean(int aInt, String string, String string0, String string1, java.sql.Date valueOf, int aInt0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public String getName() {
         return name;
     }
@@ -80,36 +89,5 @@ public class StudentBean {
 
     public void setRecords(int records) {
         this.records = records;
-    }
-    @PostConstruct
-    public void init() {
-        studentsListFromDB = DatabaseOperation.getStudentsListFromDB();
-        if(studentsListFromDB != null) {
-            this.records = studentsListFromDB.size();
-        }
-    }    
-    
-    public ArrayList studentsList() {
-        return studentsListFromDB;
-    }
-     
-    public String saveStudentDetails(StudentBean newStudentObj) {
-        return DatabaseOperation.saveStudentDetailsInDB(newStudentObj);
-    }
-     
-    public String editStudentRecord(int studentsId) {
-        return DatabaseOperation.editStudentRecordInDB(studentsId);
-    }
-     
-    public String updateStudentDetails(StudentBean updateStudentObj) {
-        return DatabaseOperation.updateStudentDetailsInDB(updateStudentObj);
-    }
-     
-    public String deleteStudentRecord(int studentuId) {
-        return DatabaseOperation.deleteStudentRecordInDB(studentuId);
-    }
-
-    public void setBitrth(java.sql.Date date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
