@@ -14,30 +14,19 @@ import java.sql.PreparedStatement;
  * @author young
  */
 public class Connector {
-  public final static String connectionString = "jdbc:mysql://localhost:3306/student";
-    public final static String user = "root";
-    public final static String password = "";
 
-    private static Connector instance;
+    public static Connection connObj;
 
-    Connection conn;
-    private Connector() throws Exception{
-        Class.forName("com.mysql.jdbc.Driver");
-        // tao connect
-        conn = DriverManager.getConnection(connectionString,user,password);
-    }
-
-    public static Connector getInstance() throws Exception {
-        if (instance == null){
-            instance = new Connector();
+    public static Connection getConnection() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String db_url = "jdbc:mysql://localhost:3306/student",
+                    db_userName = "root",
+                    db_password = "";
+            connObj = DriverManager.getConnection(db_url, db_userName, db_password);
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
         }
-        return instance;
+        return connObj;
     }
-
-    public PreparedStatement getStatement(String sql) throws Exception{
-        PreparedStatement statement = conn.prepareStatement(sql);
-        return statement;
-    }
-
-
 }

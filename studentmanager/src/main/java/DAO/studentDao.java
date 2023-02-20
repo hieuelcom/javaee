@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,71 +6,69 @@
  */
 package DAO;
 
+import static DBPool.Connector.connObj;
+import static DBPool.Connector.getConnection;
 import java.util.ArrayList;
 import student.StudentBean;
-import DBPool.Connector;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Map;
+import javax.faces.context.FacesContext;
+
 /**
  *
  * @author young
  */
-public class studentDao  {
-    
-    
-    public ArrayList<StudentBean> liststudent() {  
-        ArrayList studentsList = new ArrayList();  
-//add data vào tableview
+public class studentDao {
+
+    public static Statement stmtObj;
+    public static ResultSet resultSetObj;
+
+   
+    public static PreparedStatement pstmt;
+
+    public static ArrayList getStudentsListFromDB() {
+        ArrayList studentsList = new ArrayList();
         try {
-            //truy van sql
-            String txt_sql = "SELECT * FROM student";
-
-            Connector conn = Connector.getInstance();   //connector
-            PreparedStatement stt = conn.getStatement(txt_sql);
-
-            ResultSet rs = stt.executeQuery(txt_sql);
-
-            ArrayList<StudentBean> list = new ArrayList<>();
-
-            while (rs.next()) {
-                list.add(new StudentBean(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("studentid"),
-                        rs.getString("adrress"),
-                        Date.valueOf(rs.getString("birth")),
-                        rs.getInt("age")
-                ));
+            stmtObj = getConnection().createStatement();
+            resultSetObj = stmtObj.executeQuery("select * from student");
+            while (resultSetObj.next()) {
+                StudentBean stuObj = new StudentBean();
+                stuObj.setId(resultSetObj.getInt("id"));
+                stuObj.setName(resultSetObj.getString("name"));
+                stuObj.setStudentID(resultSetObj.getString("studentid"));
+                stuObj.setAge(resultSetObj.getInt("age"));
+                stuObj.setBirth(resultSetObj.getDate("birth"));
+                stuObj.setAddress(resultSetObj.getString("address"));
+                studentsList.add(stuObj);
             }
-            return list;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Total Records Fetched: " + studentsList.size());
+            connObj.close();
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
         }
         return studentsList;
     }
-     public String add(StudentBean stuadd) {
-        //truy vấn sql: thêm sv vào assigment01.database
+
+    public static String saveStudentDetailsInDB(StudentBean newStudentObj) {
         int saveResult = 0;
         String navigationResult = "";
-        String sql_txt = "insert into student (id,name,studentid,birth,address,age) values(?,?,?,?,?,?)";
         try {
-            Connector conn = Connector.getInstance();
-            PreparedStatement stt = conn.getStatement(sql_txt);
-            stt.setInt(1,stuadd.getId());
-            stt.setString(2,stuadd.getName());
-            stt.setString(3,stuadd.getStudentID());
-            stt.setString(4,stuadd.getBirth().toString());
-            stt.setString(5,stuadd.getAddress());
-            stt.setInt(6,stuadd.getAge());
-
-            stt.execute();
-            System.out.println(sql_txt);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            pstmt = getConnection().prepareStatement("insert into student (name, studentid, age, birth, address) values (?, ?, ?, ?, ?)");
+            pstmt.setString(1, newStudentObj.getName());
+            pstmt.setString(2, newStudentObj.getStudentID());
+            pstmt.setInt(3, newStudentObj.getAge());
+            pstmt.setDate(4, (Date) newStudentObj.getBirth());
+            pstmt.setString(5, newStudentObj.getAddress());
+            saveResult = pstmt.executeUpdate();
+            connObj.close();
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
         }
-        if(saveResult !=0) {
+        if (saveResult != 0) {
             navigationResult = "studentsList.xhtml?faces-redirect=true";
         } else {
             navigationResult = "createStudent.xhtml?faces-redirect=true";
@@ -77,38 +76,59 @@ public class studentDao  {
         return navigationResult;
     }
 
-    
-    public String edit(StudentBean stuedit) {
-        String sql_txt = "UPDATE tbstu SET studentid=?,name=?,birth=?,address=?,age=? where id=?";
-        try{
-            Connector conn = Connector.getInstance();
-            PreparedStatement stt = conn.getStatement(sql_txt);
-            stt.setString(1,stuedit.getStudentID());
-            stt.setString(2,stuedit.getName());
-            stt.setString(3,stuedit.getBirth().toString());
-            stt.setString(4,stuedit.getAddress());
-            stt.setDouble(5,stuedit.getAge());
+    public static String editStudentRecordInDB(int studentId) {
+        StudentBean editRecord = null;
+        System.out.println("editStudentRecordInDB() : Student Id: " + studentId);
 
-            stt.setInt(6,stuedit.getId());
-            // insert
-            stt.execute();
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+        /* Setting The Particular Student Details In Session */
+        Map<String, Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+        try {
+            stmtObj = getConnection().createStatement();
+            resultSetObj = stmtObj.executeQuery("select * from student_record where student_id = " + studentId);
+            if (resultSetObj != null) {
+                resultSetObj.next();
+                editRecord = new StudentBean();
+                editRecord.setId(resultSetObj.getInt("id"));
+                editRecord.setName(resultSetObj.getString("name"));
+                editRecord.setStudentID(resultSetObj.getString("student"));
+                editRecord.setBirth(resultSetObj.getDate("birth"));
+                editRecord.setAddress(resultSetObj.getString("address"));
+                editRecord.setAge(resultSetObj.getInt("age"));
+            }
+            sessionMapObj.put("editRecordObj", editRecord);
+            connObj.close();
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
         }
         return "/editStudent.xhtml?faces-redirect=true";
-        
     }
 
-    
-    public String delete(StudentBean studelete) {
-        String sql_txt = "delete from student where id=?";
+    public static String updateStudentDetailsInDB(StudentBean updateStudentObj) {
         try {
-            Connector conn = Connector.getInstance();
-            PreparedStatement stt = conn.getStatement(sql_txt);
-            stt.setInt(1, studelete.getId());
-            stt.execute();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            pstmt = getConnection().prepareStatement("update student set name=?, studentid=?, age=?, birth=?, address=? where id=?");
+            pstmt.setString(1, updateStudentObj.getName());
+            pstmt.setString(2, updateStudentObj.getStudentID());
+            pstmt.setInt(3, updateStudentObj.getAge());
+            pstmt.setDate(4, (Date) updateStudentObj.getBirth());
+            pstmt.setString(5, updateStudentObj.getAddress());
+            pstmt.setInt(6, updateStudentObj.getId());
+            pstmt.executeUpdate();
+            connObj.close();
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
+        }
+        return "/studentsList.xhtml?faces-redirect=true";
+    }
+
+    public static String deleteStudentRecordInDB(int studentId) {
+        System.out.println("deleteStudentRecordInDB() : Student Id: " + studentId);
+        try {
+            pstmt = getConnection().prepareStatement("delete from student where id = " + studentId);
+            pstmt.executeUpdate();
+            connObj.close();
+        } catch (Exception sqlException) {
+            sqlException.printStackTrace();
         }
         return "/studentsList.xhtml?faces-redirect=true";
     }
