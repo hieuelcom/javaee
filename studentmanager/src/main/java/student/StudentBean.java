@@ -8,15 +8,7 @@ package student;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
- 
-import javax.faces.bean.ViewScoped;
- 
-import DAO.studentDao;
-import DBPool.Connector;
-@ManagedBean @ViewScoped
+
 public class StudentBean {
     private int id;
     private String name;

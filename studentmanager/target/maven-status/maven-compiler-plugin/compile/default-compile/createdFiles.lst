@@ -1,5 +1,4 @@
 student\StudentBean.class
-DAO\Dao.class
 DAO\studentDao.class
 DBPool\Connector.class
-controller\StudentController.class
+student\PaginatorView.class

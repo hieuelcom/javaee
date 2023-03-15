@@ -61,7 +61,7 @@ public class studentDao {
             pstmt.setString(1, newStudentObj.getName());
             pstmt.setString(2, newStudentObj.getStudentID());
             pstmt.setInt(3, newStudentObj.getAge());
-            pstmt.setDate(4, (Date) newStudentObj.getBirth());
+            pstmt.setDate(4, new java.sql.Date(newStudentObj.getBirth().getTime()));
             pstmt.setString(5, newStudentObj.getAddress());
             saveResult = pstmt.executeUpdate();
             connObj.close();
@@ -110,7 +110,7 @@ public class studentDao {
             pstmt.setString(1, updateStudentObj.getName());
             pstmt.setString(2, updateStudentObj.getStudentID());
             pstmt.setInt(3, updateStudentObj.getAge());
-            pstmt.setDate(4, (Date) updateStudentObj.getBirth());
+            pstmt.setDate(4, new java.sql.Date(updateStudentObj.getBirth().getTime()));
             pstmt.setString(5, updateStudentObj.getAddress());
             pstmt.setInt(6, updateStudentObj.getId());
             pstmt.executeUpdate();
